@@ -76,6 +76,18 @@ app.post('/addbook', async (req, res) => {
     }
 });
 
+app.delete('/delete-book/:id', async (req, res) => {
+    const bookId = req.params.id;
+
+    try {
+        const result = await pool.query(`DELETE FROM books WHERE id = $1`, [bookId]);
+        res.json({message: 'Book deleted sucessfully'});
+    } catch (error) {
+        console.error;
+        res.status(500).json({error: 'An error has occured'})
+    }
+})
+
 app.listen(PORT, () => {
     console.log('Server is running ...')
 })
